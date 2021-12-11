@@ -4,4 +4,7 @@ List Item: {{ $listItem }}
 List Item quoted: {{ $listItem | quote }}
 List Item capitalCamelCase: {{ $listItem | capitalCamelCase }}
 {{- end }}
+{{ $.block.doesNotExist }}
+{{ $.block.doesNotExist | orVoid }}
+{{ $.block.aKey | orVoid }}
 // inline template end
