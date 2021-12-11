@@ -13,6 +13,7 @@ func AuxilirayFunctions() template.FuncMap {
         "orVoid": OrVoid,
 		"goType": GoType,
 		"goTypeWithModule": GoTypeWithModule,
+		"uppercaseToCapitalized": UppercaseToCapitalized,
 	}
 }
 
@@ -55,4 +56,8 @@ func GoTypeWithModule(module, input string) string {
 		return "bool"
 	}
 	return fmt.Sprintf("%s%s", module, input)
+}
+
+func UppercaseToCapitalized(input string) string {
+	return strings.ToUpper(input[:1]) + strings.ToLower(input[1:])
 }

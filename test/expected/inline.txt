@@ -19,3 +19,5 @@ number: int64
 string: string
 boolean: bool
 SomethingElse: *model.SomethingElse
+uppercaseToCapitalized:
+PUT: Put

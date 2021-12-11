@@ -19,4 +19,6 @@ number: {{ "number" | goTypeWithModule "*model." }}
 string: {{ "string" | goTypeWithModule "*model." }}
 boolean: {{ "boolean" | goTypeWithModule "*model." }}
 SomethingElse: {{ "SomethingElse" | goTypeWithModule "*model." }}
+uppercaseToCapitalized:
+PUT: {{ "PUT" | uppercaseToCapitalized }}
 // inline template end
