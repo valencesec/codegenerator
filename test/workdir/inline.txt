@@ -1,0 +1,7 @@
+
+List Item: firstItem
+List Item quoted: "firstItem"
+List Item capitalCamelCase: FirstItem
+List Item: secondItem
+List Item quoted: "secondItem"
+List Item capitalCamelCase: SecondItem

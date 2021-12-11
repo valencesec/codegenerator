@@ -1,0 +1,7 @@
+// inline template: data file: "test/workdir/inline.yaml"
+{{- range $listItem := $.listOfItems }}
+List Item: {{ $listItem }}
+List Item quoted: {{ $listItem | quote }}
+List Item capitalCamelCase: {{ $listItem | capitalCamelCase }}
+{{- end }}
+// inline template end
