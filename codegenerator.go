@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -69,5 +70,16 @@ func SingleFile(inFilename string, outFilename string) error {
 		outputWriter.Flush()
 		contentsBytes = append(append(contentsBytes[:match[0]], outputBuffer.Bytes()...), contentsBytes[match[1]:]...)
 	}
-	return ioutil.WriteFile(outFilename, contentsBytes, 0644)
+	err = ioutil.WriteFile(outFilename, contentsBytes, 0644)
+	if err != nil {
+		return err
+	}
+	if strings.HasSuffix(outFilename, ".go") {
+		_, err = exec.Command("gofmt", "-w", outFilename).CombinedOutput()
+		if err != nil {
+			log.Println("gofmt failed", err)
+			return err			
+		}
+	}
+	return nil
 }
