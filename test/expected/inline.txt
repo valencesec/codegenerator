@@ -23,3 +23,9 @@ uppercaseToCapitalized:
 PUT: Put
 replace:
 a/b/${id}: a/b/:id
+split:
+a/b/c: b
+splitIndexOf:
+a/b/c: 1
+splitIndexOfNegative:
+a/b/c: -2

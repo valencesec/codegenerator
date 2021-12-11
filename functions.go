@@ -15,6 +15,9 @@ func AuxilirayFunctions() template.FuncMap {
 		"goTypeWithModule": GoTypeWithModule,
 		"uppercaseToCapitalized": UppercaseToCapitalized,
 		"replace": Replace,
+		"split": Split,
+		"splitIndexOf": SplitIndexOf,
+		"splitIndexOfNegative": SplitIndexOfNegative,
 	}
 }
 
@@ -65,4 +68,28 @@ func UppercaseToCapitalized(input string) string {
 
 func Replace(whenFound string, replaceWith string, input string) string {
 	return strings.ReplaceAll(input, whenFound, replaceWith)
+}
+
+func Split(seperator string, input string) []string {
+	return strings.Split(input, seperator)
+}
+
+func SplitIndexOf(seperator string, lookFor string, input string) int {
+	parts := strings.Split(input, seperator)
+	for i, part := range parts {
+		if part == lookFor {
+			return i
+		}
+	}
+	return -1
+}
+
+func SplitIndexOfNegative(seperator string, lookFor string, input string) int {
+	parts := strings.Split(input, seperator)
+	for i, part := range parts {
+		if part == lookFor {
+			return i - len(parts)
+		}
+	}
+	return -1000000
 }

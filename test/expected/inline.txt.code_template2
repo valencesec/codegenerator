@@ -23,4 +23,10 @@ uppercaseToCapitalized:
 PUT: {{ "PUT" | uppercaseToCapitalized }}
 replace:
 a/b/${id}: {{ "a/b/${id}" | replace "${id}" ":id" }}
+split:
+a/b/c: {{ index (split "/" "a/b/c") 1 }}
+splitIndexOf:
+a/b/c: {{ splitIndexOf "/" "b" "a/b/c" }}
+splitIndexOfNegative:
+a/b/c: {{ splitIndexOfNegative "/" "b" "a/b/c" }}
 // inline template end
