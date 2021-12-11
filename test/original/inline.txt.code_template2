@@ -29,4 +29,10 @@ splitIndexOf:
 a/b/c: {{ splitIndexOf "/" "b" "a/b/c" }}
 splitIndexOfNegative:
 a/b/c: {{ splitIndexOfNegative "/" "b" "a/b/c" }}
+lowerNoUnderscore:
+ABC_DEF_123: {{ "ABC_DEF_123" | lowerNoUnderscore }}
+camelCaseNoUnderscore:
+ABC_DEF_123: {{ "ABC_DEF_123" | camelCaseNoUnderscore }}
+capitalCamelCaseNoUnderscore:
+ABC_DEF_123: {{ "ABC_DEF_123" | capitalCamelCaseNoUnderscore }}
 // inline template end

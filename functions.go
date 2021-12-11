@@ -18,6 +18,9 @@ func AuxilirayFunctions() template.FuncMap {
 		"split": Split,
 		"splitIndexOf": SplitIndexOf,
 		"splitIndexOfNegative": SplitIndexOfNegative,
+        "lowerNoUnderscore": LowerNoUnderscore,
+        "camelCaseNoUnderscore": CamelCaseNoUnderscore,
+        "capitalCamelCaseNoUnderscore": CapitalCamelCaseNoUnderscore,
 	}
 }
 
@@ -92,4 +95,21 @@ func SplitIndexOfNegative(seperator string, lookFor string, input string) int {
 		}
 	}
 	return -1000000
+}
+
+func LowerNoUnderscore(input string) string {
+	return strings.ToLower(strings.ReplaceAll(input, "_", ""))
+}
+
+func CapitalCamelCaseNoUnderscore(input string) string {
+	parts := strings.Split(input, "_")
+	for i, part := range parts {
+		parts[i] = strings.ToUpper(part[:1]) + strings.ToLower(part[1:])
+	}
+	return strings.Join(parts, "")
+}
+
+func CamelCaseNoUnderscore(input string) string {
+	capital := CapitalCamelCaseNoUnderscore(input)
+	return strings.ToLower(capital[:1]) + capital[1:]
 }

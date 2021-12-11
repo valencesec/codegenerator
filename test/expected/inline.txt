@@ -29,3 +29,9 @@ splitIndexOf:
 a/b/c: 1
 splitIndexOfNegative:
 a/b/c: -2
+lowerNoUnderscore:
+ABC_DEF_123: abcdef123
+camelCaseNoUnderscore:
+ABC_DEF_123: abcDef123
+capitalCamelCaseNoUnderscore:
+ABC_DEF_123: AbcDef123
