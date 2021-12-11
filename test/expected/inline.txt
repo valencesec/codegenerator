@@ -1,10 +1,21 @@
-
+capitalCamelCase:
 List Item: firstItem
 List Item quoted: "firstItem"
 List Item capitalCamelCase: FirstItem
 List Item: secondItem
 List Item quoted: "secondItem"
 List Item capitalCamelCase: SecondItem
+orVoid:
 <no value>
 void
 aValue
+goType:
+number: int64
+string: string
+boolean: bool
+SomethingElse: SomethingElse
+goTypeWithModule:
+number: int64
+string: string
+boolean: bool
+SomethingElse: *model.SomethingElse

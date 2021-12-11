@@ -1,10 +1,22 @@
 // inline template: data file: "test/workdir/inline.yaml"
+capitalCamelCase:
 {{- range $listItem := $.listOfItems }}
 List Item: {{ $listItem }}
 List Item quoted: {{ $listItem | quote }}
 List Item capitalCamelCase: {{ $listItem | capitalCamelCase }}
 {{- end }}
+orVoid:
 {{ $.block.doesNotExist }}
 {{ $.block.doesNotExist | orVoid }}
 {{ $.block.aKey | orVoid }}
+goType:
+number: {{ "number" | goType }}
+string: {{ "string" | goType }}
+boolean: {{ "boolean" | goType }}
+SomethingElse: {{ "SomethingElse" | goType }}
+goTypeWithModule:
+number: {{ "number" | goTypeWithModule "*model." }}
+string: {{ "string" | goTypeWithModule "*model." }}
+boolean: {{ "boolean" | goTypeWithModule "*model." }}
+SomethingElse: {{ "SomethingElse" | goTypeWithModule "*model." }}
 // inline template end

@@ -11,6 +11,8 @@ func AuxilirayFunctions() template.FuncMap {
 		"quote": Quote,
 		"capitalCamelCase": CapitalCamelCase,
         "orVoid": OrVoid,
+		"goType": GoType,
+		"goTypeWithModule": GoTypeWithModule,
 	}
 }
 
@@ -27,4 +29,30 @@ func OrVoid(input interface{}) string {
         return "void"
     }
     return input.(string)
+}
+
+func GoType(input string) string {
+	if input == "string" {
+		return "string"
+	}
+	if input == "number" {
+		return "int64"
+	}
+	if input == "boolean" {
+		return "bool"
+	}
+	return input
+}
+
+func GoTypeWithModule(module, input string) string {
+	if input == "string" {
+		return "string"
+	}
+	if input == "number" {
+		return "int64"
+	}
+	if input == "boolean" {
+		return "bool"
+	}
+	return fmt.Sprintf("%s%s", module, input)
 }
