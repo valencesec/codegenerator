@@ -21,4 +21,6 @@ boolean: {{ "boolean" | goTypeWithModule "*model." }}
 SomethingElse: {{ "SomethingElse" | goTypeWithModule "*model." }}
 uppercaseToCapitalized:
 PUT: {{ "PUT" | uppercaseToCapitalized }}
+replace:
+a/b/${id}: {{ "a/b/${id}" | replace "${id}" ":id" }}
 // inline template end

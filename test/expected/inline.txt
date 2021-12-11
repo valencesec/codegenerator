@@ -21,3 +21,5 @@ boolean: bool
 SomethingElse: *model.SomethingElse
 uppercaseToCapitalized:
 PUT: Put
+replace:
+a/b/${id}: a/b/:id

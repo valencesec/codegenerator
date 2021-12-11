@@ -14,6 +14,7 @@ func AuxilirayFunctions() template.FuncMap {
 		"goType": GoType,
 		"goTypeWithModule": GoTypeWithModule,
 		"uppercaseToCapitalized": UppercaseToCapitalized,
+		"replace": Replace,
 	}
 }
 
@@ -60,4 +61,8 @@ func GoTypeWithModule(module, input string) string {
 
 func UppercaseToCapitalized(input string) string {
 	return strings.ToUpper(input[:1]) + strings.ToLower(input[1:])
+}
+
+func Replace(whenFound string, replaceWith string, input string) string {
+	return strings.ReplaceAll(input, whenFound, replaceWith)
 }
