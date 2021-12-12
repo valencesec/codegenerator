@@ -21,6 +21,7 @@ func AuxilirayFunctions() template.FuncMap {
         "lowerNoUnderscore": LowerNoUnderscore,
         "camelCaseNoUnderscore": CamelCaseNoUnderscore,
         "capitalCamelCaseNoUnderscore": CapitalCamelCaseNoUnderscore,
+		"upperSpaceToUnderscore": UpperSpaceToUnderscore,
 	}
 }
 
@@ -112,4 +113,8 @@ func CapitalCamelCaseNoUnderscore(input string) string {
 func CamelCaseNoUnderscore(input string) string {
 	capital := CapitalCamelCaseNoUnderscore(input)
 	return strings.ToLower(capital[:1]) + capital[1:]
+}
+
+func UpperSpaceToUnderscore(input string) string {
+	return strings.ToUpper(strings.ReplaceAll(input, " ", "_"))
 }

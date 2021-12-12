@@ -35,4 +35,6 @@ camelCaseNoUnderscore:
 ABC_DEF_123: {{ "ABC_DEF_123" | camelCaseNoUnderscore }}
 capitalCamelCaseNoUnderscore:
 ABC_DEF_123: {{ "ABC_DEF_123" | capitalCamelCaseNoUnderscore }}
+upperSpaceToUnderscore:
+a b 345 c: {{ "a b 345 c" | upperSpaceToUnderscore}}
 // inline template end
