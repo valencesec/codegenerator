@@ -41,6 +41,41 @@ func SingleFile(inFilename string, outFilename string) error {
 		return err
 	}
 	for {
+		match := fileTemplateRegex.FindSubmatchIndex(contentsBytes)
+		if len(match) == 0 {
+			break
+		}
+		dataFilename := string(contentsBytes[match[2]:match[3]])
+		templateFilename := string(contentsBytes[match[4]:match[5]])
+		templateContents, err := ioutil.ReadFile(templateFilename)
+		if err != nil {
+			log.Printf("While attempting to read template %s out of %s at position %d, template contents %s", templateFilename, inFilename, match[0], templateContents)
+			return err
+		}		
+		parsedTemplate, err := template.New(fmt.Sprintf("%s:%d", inFilename, match[0])).Funcs(AuxilirayFunctions()).Parse(string(templateContents))
+		if err != nil {
+			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
+			return err
+		}
+		dataContents, err := ioutil.ReadFile(dataFilename)
+		if err != nil {
+			return err
+		}
+		var data interface{}
+		err = yaml.Unmarshal(dataContents, &data)		
+		if err != nil {
+			return err
+		}
+		outputBuffer := bytes.Buffer{}
+		outputWriter := bufio.NewWriter(&outputBuffer)
+		err = parsedTemplate.Execute(outputWriter, data)
+		if err != nil {
+			return err
+		}
+		outputWriter.Flush()
+		contentsBytes = append(append(contentsBytes[:match[0]], outputBuffer.Bytes()...), contentsBytes[match[1]:]...)
+	}
+	for {
 		match := inlineTemplateRegex.FindSubmatchIndex(contentsBytes)
 		if len(match) == 0 {
 			break
