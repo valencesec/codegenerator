@@ -73,7 +73,9 @@ func SingleFile(inFilename string, outFilename string) error {
 			return err
 		}
 		outputWriter.Flush()
-		contentsBytes = append(append(contentsBytes[:match[0]], outputBuffer.Bytes()...), contentsBytes[match[1]:]...)
+		upToCommand := contentsBytes[:match[0]]
+		afterCommand := contentsBytes[match[1]:]
+		contentsBytes= append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
 	}
 	for {
 		match := inlineTemplateRegex.FindSubmatchIndex(contentsBytes)
@@ -103,7 +105,9 @@ func SingleFile(inFilename string, outFilename string) error {
 			return err
 		}
 		outputWriter.Flush()
-		contentsBytes = append(append(contentsBytes[:match[0]], outputBuffer.Bytes()...), contentsBytes[match[1]:]...)
+		upToCommand := contentsBytes[:match[0]]
+		afterCommand := contentsBytes[match[1]:]
+		contentsBytes= append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
 	}
 	err = ioutil.WriteFile(outFilename, contentsBytes, 0644)
 	if err != nil {
