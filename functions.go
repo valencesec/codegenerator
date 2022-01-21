@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"text/template"
+	"unicode"
 )
 
 func AuxilirayFunctions() template.FuncMap {
@@ -22,6 +23,8 @@ func AuxilirayFunctions() template.FuncMap {
         "camelCaseNoUnderscore": CamelCaseNoUnderscore,
         "capitalCamelCaseNoUnderscore": CapitalCamelCaseNoUnderscore,
 		"upperSpaceToUnderscore": UpperSpaceToUnderscore,
+		"rustType": RustType,
+		"camelCaseToLowerSnakeCase": CamelCaseToLowerSnakeCase,
 	}
 }
 
@@ -117,4 +120,35 @@ func CamelCaseNoUnderscore(input string) string {
 
 func UpperSpaceToUnderscore(input string) string {
 	return strings.ToUpper(strings.ReplaceAll(input, " ", "_"))
+}
+
+func RustType(input string) string {
+	if input == "string" {
+		return "String"
+	}
+	if input == "number" {
+		return "i64"
+	}
+	if input == "boolean" {
+		return "bool"
+	}
+	return input
+}
+
+func CamelCaseToLowerSnakeCase(input string) string {
+	if len(input) == 0 {
+		return ""
+	}
+	result := strings.ToLower(input[:1])
+	for i, runeValue := range input {
+		if i == 0 {
+			continue;
+		}
+		if unicode.IsUpper(runeValue) {
+			result += "_" + string(unicode.ToLower(runeValue))
+		} else {
+			result += string(runeValue)
+		}
+	}
+	return result
 }

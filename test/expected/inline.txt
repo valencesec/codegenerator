@@ -37,3 +37,10 @@ capitalCamelCaseNoUnderscore:
 ABC_DEF_123: AbcDef123
 upperSpaceToUnderscore:
 a b 345 c: A_B_345_C
+rustType:
+number: i64
+string: String
+boolean: bool
+SomethingElse: SomethingElse
+camelCaseToLowerSnakeCase:
+firstSecondThird: first_second_third

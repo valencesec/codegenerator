@@ -37,4 +37,11 @@ capitalCamelCaseNoUnderscore:
 ABC_DEF_123: {{ "ABC_DEF_123" | capitalCamelCaseNoUnderscore }}
 upperSpaceToUnderscore:
 a b 345 c: {{ "a b 345 c" | upperSpaceToUnderscore}}
+rustType:
+number: {{ "number" | rustType }}
+string: {{ "string" | rustType }}
+boolean: {{ "boolean" | rustType }}
+SomethingElse: {{ "SomethingElse" | rustType }}
+camelCaseToLowerSnakeCase:
+firstSecondThird: {{ "firstSecondThird" | camelCaseToLowerSnakeCase }}
 // inline template end
