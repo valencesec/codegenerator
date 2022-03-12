@@ -9,23 +9,33 @@ import (
 
 func AuxilirayFunctions() template.FuncMap {
 	return template.FuncMap{
-		"quote": Quote,
-		"capitalCamelCase": CapitalCamelCase,
-        "orVoid": OrVoid,
-		"goType": GoType,
-		"goTypeWithModule": GoTypeWithModule,
-		"uppercaseToCapitalized": UppercaseToCapitalized,
-		"replace": Replace,
-		"split": Split,
-		"splitIndexOf": SplitIndexOf,
-		"splitIndexOfNegative": SplitIndexOfNegative,
-        "lowerNoUnderscore": LowerNoUnderscore,
-        "camelCaseNoUnderscore": CamelCaseNoUnderscore,
-        "capitalCamelCaseNoUnderscore": CapitalCamelCaseNoUnderscore,
-		"upperSpaceToUnderscore": UpperSpaceToUnderscore,
-		"rustType": RustType,
-		"camelCaseToLowerSnakeCase": CamelCaseToLowerSnakeCase,
+		"quote":                        Quote,
+		"capitalCamelCase":             CapitalCamelCase,
+		"orVoid":                       OrVoid,
+		"goType":                       GoType,
+		"goTypeWithModule":             GoTypeWithModule,
+		"uppercaseToCapitalized":       UppercaseToCapitalized,
+		"replace":                      Replace,
+		"split":                        Split,
+		"splitIndexOf":                 SplitIndexOf,
+		"splitIndexOfNegative":         SplitIndexOfNegative,
+		"lowerNoUnderscore":            LowerNoUnderscore,
+		"camelCaseNoUnderscore":        CamelCaseNoUnderscore,
+		"capitalCamelCaseNoUnderscore": CapitalCamelCaseNoUnderscore,
+		"upperSpaceToUnderscore":       UpperSpaceToUnderscore,
+		"rustType":                     RustType,
+		"camelCaseToLowerSnakeCase":    CamelCaseToLowerSnakeCase,
+		"has":                          Has,
 	}
+}
+
+func Has(input interface{}, field string) bool {
+	asMap, ok := input.(map[interface{}]interface{})
+	if !ok {
+		return false
+	}
+	_, has := asMap[field]
+	return has
 }
 
 func Quote(input string) string {
@@ -37,10 +47,10 @@ func CapitalCamelCase(input string) string {
 }
 
 func OrVoid(input interface{}) string {
-    if input == nil {
-        return "void"
-    }
-    return input.(string)
+	if input == nil {
+		return "void"
+	}
+	return input.(string)
 }
 
 func GoType(input string) string {
@@ -142,7 +152,7 @@ func CamelCaseToLowerSnakeCase(input string) string {
 	result := strings.ToLower(input[:1])
 	for i, runeValue := range input {
 		if i == 0 {
-			continue;
+			continue
 		}
 		if unicode.IsUpper(runeValue) {
 			result += "_" + string(unicode.ToLower(runeValue))

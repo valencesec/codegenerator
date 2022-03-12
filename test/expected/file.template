@@ -4,3 +4,9 @@ List Item: {{ $listItem }}
 List Item quoted: {{ $listItem | quote }}
 List Item capitalCamelCase: {{ $listItem | capitalCamelCase }}
 {{- end }}
+{{- if has . "testHas" }}
+HAS
+{{- end }}
+{{- if has . "testHasNot" }}
+HAS
+{{- end }}

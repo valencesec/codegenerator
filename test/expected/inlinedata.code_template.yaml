@@ -1,0 +1,7 @@
+# inline data for template: template file: "test/workdir/file.template"
+listOfItems:
+  - firstItem
+  - secondItem
+block:
+  aKey: aValue
+testHas: this exists
