@@ -44,4 +44,6 @@ boolean: {{ "boolean" | rustType }}
 SomethingElse: {{ "SomethingElse" | rustType }}
 camelCaseToLowerSnakeCase:
 firstSecondThird: {{ "firstSecondThird" | camelCaseToLowerSnakeCase }}
+trimPrefix: {{ "prefixThing" | trimPrefix "prefix" }}
+trimSuffix: {{ "ThingSuffix" | trimSuffix "Suffix" }}
 // inline template end

@@ -26,6 +26,8 @@ func AuxilirayFunctions() template.FuncMap {
 		"rustType":                     RustType,
 		"camelCaseToLowerSnakeCase":    CamelCaseToLowerSnakeCase,
 		"has":                          Has,
+		"trimPrefix":                          TrimPrefix,
+		"trimSuffix":                          TrimSuffix,
 	}
 }
 
@@ -161,4 +163,12 @@ func CamelCaseToLowerSnakeCase(input string) string {
 		}
 	}
 	return result
+}
+
+func TrimPrefix(prefix string, input string, ) string {
+	return strings.TrimPrefix(input, prefix)
+}
+
+func TrimSuffix(suffix string, input string) string {
+	return strings.TrimSuffix(input, suffix)
 }

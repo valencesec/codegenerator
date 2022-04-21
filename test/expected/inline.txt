@@ -44,3 +44,5 @@ boolean: bool
 SomethingElse: SomethingElse
 camelCaseToLowerSnakeCase:
 firstSecondThird: first_second_third
+trimPrefix: Thing
+trimSuffix: Thing
