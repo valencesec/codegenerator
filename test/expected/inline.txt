@@ -13,6 +13,7 @@ goType:
 number: int64
 string: string
 boolean: bool
+unknown: interface{}
 SomethingElse: SomethingElse
 goTypeWithModule:
 number: int64

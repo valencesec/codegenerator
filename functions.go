@@ -55,7 +55,7 @@ func OrVoid(input interface{}) string {
 	return input.(string)
 }
 
-func GoType(input string) string {
+func goType(input string) string {
 	if input == "string" {
 		return "string"
 	}
@@ -64,19 +64,25 @@ func GoType(input string) string {
 	}
 	if input == "boolean" {
 		return "bool"
+	}
+	if input == "unknown" {
+		return "interface{}"
+	}
+	return ""
+}
+
+func GoType(input string) string {
+	converted := goType(input)
+	if converted != "" {
+		return converted
 	}
 	return input
 }
 
 func GoTypeWithModule(module, input string) string {
-	if input == "string" {
-		return "string"
-	}
-	if input == "number" {
-		return "int64"
-	}
-	if input == "boolean" {
-		return "bool"
+	converted := goType(input)
+	if converted != "" {
+		return converted
 	}
 	return fmt.Sprintf("%s%s", module, input)
 }

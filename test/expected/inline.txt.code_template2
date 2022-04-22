@@ -13,6 +13,7 @@ goType:
 number: {{ "number" | goType }}
 string: {{ "string" | goType }}
 boolean: {{ "boolean" | goType }}
+unknown: {{ "unknown" | goType }}
 SomethingElse: {{ "SomethingElse" | goType }}
 goTypeWithModule:
 number: {{ "number" | goTypeWithModule "*model." }}
