@@ -20,6 +20,11 @@ number: int64
 string: string
 boolean: bool
 SomethingElse: *model.SomethingElse
+isBasicType:
+number: YES
+string: YES
+boolean: YES
+SomethingElse: NO
 uppercaseToCapitalized:
 PUT: Put
 replace:

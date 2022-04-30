@@ -26,8 +26,9 @@ func AuxilirayFunctions() template.FuncMap {
 		"rustType":                     RustType,
 		"camelCaseToLowerSnakeCase":    CamelCaseToLowerSnakeCase,
 		"has":                          Has,
-		"trimPrefix":                          TrimPrefix,
-		"trimSuffix":                          TrimSuffix,
+		"trimPrefix":                   TrimPrefix,
+		"trimSuffix":                   TrimSuffix,
+		"isBasicType":                  IsBasicType,
 	}
 }
 
@@ -53,6 +54,10 @@ func OrVoid(input interface{}) string {
 		return "void"
 	}
 	return input.(string)
+}
+
+func IsBasicType(input string) bool {
+	return input == "string" || input == "number" || input == "boolean" || input == "unknown"
 }
 
 func goType(input string) string {
@@ -171,7 +176,7 @@ func CamelCaseToLowerSnakeCase(input string) string {
 	return result
 }
 
-func TrimPrefix(prefix string, input string, ) string {
+func TrimPrefix(prefix string, input string) string {
 	return strings.TrimPrefix(input, prefix)
 }
 

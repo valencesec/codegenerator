@@ -20,6 +20,11 @@ number: {{ "number" | goTypeWithModule "*model." }}
 string: {{ "string" | goTypeWithModule "*model." }}
 boolean: {{ "boolean" | goTypeWithModule "*model." }}
 SomethingElse: {{ "SomethingElse" | goTypeWithModule "*model." }}
+isBasicType:
+number: {{ if isBasicType "number" }}YES{{ else }}NO{{ end }}
+string: {{ if isBasicType "string" }}YES{{ else }}NO{{ end }}
+boolean: {{ if isBasicType "boolean" }}YES{{ else }}NO{{ end }}
+SomethingElse: {{ if isBasicType "SomethingElse" }}YES{{ else }}NO{{ end }}
 uppercaseToCapitalized:
 PUT: {{ "PUT" | uppercaseToCapitalized }}
 replace:

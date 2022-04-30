@@ -52,7 +52,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		if err != nil {
 			log.Printf("While attempting to read template %s out of %s at position %d, template contents %s", templateFilename, inFilename, match[0], templateContents)
 			return err
-		}		
+		}
 		parsedTemplate, err := template.New(fmt.Sprintf("%s:%d", inFilename, match[0])).Funcs(AuxilirayFunctions()).Parse(string(templateContents))
 		if err != nil {
 			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
@@ -63,7 +63,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			return err
 		}
 		var data interface{}
-		err = yaml.Unmarshal(dataContents, &data)		
+		err = yaml.Unmarshal(dataContents, &data)
 		if err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		outputWriter.Flush()
 		upToCommand := contentsBytes[:match[0]]
 		afterCommand := contentsBytes[match[1]:]
-		contentsBytes= append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
+		contentsBytes = append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
 	}
 	for {
 		match := inlineTemplateRegex.FindSubmatchIndex(contentsBytes)
@@ -95,7 +95,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			return err
 		}
 		var data interface{}
-		err = yaml.Unmarshal(dataContents, &data)		
+		err = yaml.Unmarshal(dataContents, &data)
 		if err != nil {
 			return err
 		}
@@ -108,7 +108,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		outputWriter.Flush()
 		upToCommand := contentsBytes[:match[0]]
 		afterCommand := contentsBytes[match[1]:]
-		contentsBytes= append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
+		contentsBytes = append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
 	}
 	match := inlineDataRegex.FindSubmatchIndex(contentsBytes)
 	if len(match) > 0 {
@@ -124,7 +124,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			return err
 		}
 		var data interface{}
-		err = yaml.Unmarshal(contentsBytes, &data)		
+		err = yaml.Unmarshal(contentsBytes, &data)
 		if err != nil {
 			return err
 		}
@@ -146,7 +146,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		_, err = exec.Command("gofmt", "-w", outFilename).CombinedOutput()
 		if err != nil {
 			log.Println("gofmt failed", err)
-			return err			
+			return err
 		}
 	}
 	return nil
