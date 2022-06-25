@@ -52,3 +52,5 @@ camelCaseToLowerSnakeCase:
 firstSecondThird: first_second_third
 trimPrefix: Thing
 trimSuffix: Thing
+cutTakeBefore: /v2/abc/
+cutTakeAfter: /efg

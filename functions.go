@@ -29,6 +29,8 @@ func AuxilirayFunctions() template.FuncMap {
 		"trimPrefix":                   TrimPrefix,
 		"trimSuffix":                   TrimSuffix,
 		"isBasicType":                  IsBasicType,
+		"cutTakeBefore":                CutTakeBefore,
+		"cutTakeAfter":                 CutTakeAfter,
 	}
 }
 
@@ -182,4 +184,22 @@ func TrimPrefix(prefix string, input string) string {
 
 func TrimSuffix(suffix string, input string) string {
 	return strings.TrimSuffix(input, suffix)
+}
+
+func CutTakeBefore(seperator string, input string) string {
+	before, _, ok := strings.Cut(input, seperator)
+	if ok {
+		return before
+	} else {
+		return ""
+	}
+}
+
+func CutTakeAfter(seperator string, input string) string {
+	_, after, ok := strings.Cut(input, seperator)
+	if ok {
+		return after
+	} else {
+		return ""
+	}
 }
