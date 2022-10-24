@@ -2,7 +2,8 @@ package main
 
 import (
 	"flag"
-	"github.com/tagenasec/codegenerator"
+
+	"github.com/valencesec/codegenerator"
 )
 
 func main() {

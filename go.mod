@@ -1,4 +1,4 @@
-module github.com/tagenasec/codegenerator
+module github.com/valencesec/codegenerator
 
 go 1.17
 
