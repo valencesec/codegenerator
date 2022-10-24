@@ -12,4 +12,4 @@ accept_new_test_result:
 	cp -a test/workdir/* test/expected/
 
 install:
-	go install github.com/tagenasec/codegenerator/cmd/codegenerator
+	go install github.com/valencesec/codegenerator/cmd/codegenerator
