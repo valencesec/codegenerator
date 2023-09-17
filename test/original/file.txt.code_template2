@@ -1,2 +1,1 @@
-// file template: data file: "test/workdir/inline.yaml" template file: "test/workdir/file.template"
-// file template: data file: "test/workdir/inline.yaml" template file: "test/workdir/file.template"
+// file template: data file: "test/workdir/inline*.yaml" template file: "test/workdir/file.template"

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -16,7 +15,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-//var inlineTemplateRegex = regexp.MustCompile(`inline template: data file:`)
+// var inlineTemplateRegex = regexp.MustCompile(`inline template: data file:`)
 var inlineTemplateRegex = regexp.MustCompile(`\/\/ inline template: data file: "(.*)" *\r?\n((.|[\r\n])*?)\/\/ inline template end *\r?\n`)
 var fileTemplateRegex = regexp.MustCompile(`\/\/ file template: data file: "(.*)" template file: "(.*)" *\r?\n`)
 var inlineDataRegex = regexp.MustCompile(`# inline data for template: template file: "(.*)" *\r?\n`)
@@ -37,7 +36,7 @@ func ScanFolder(rootFolder string, extension string) error {
 }
 
 func SingleFile(inFilename string, outFilename string) error {
-	contentsBytes, err := ioutil.ReadFile(inFilename)
+	contentsBytes, err := os.ReadFile(inFilename)
 	if err != nil {
 		return err
 	}
@@ -46,9 +45,14 @@ func SingleFile(inFilename string, outFilename string) error {
 		if len(match) == 0 {
 			break
 		}
-		dataFilename := string(contentsBytes[match[2]:match[3]])
+		dataFilenameGlobExpression := string(contentsBytes[match[2]:match[3]])
+		dataFilenames, err := filepath.Glob(dataFilenameGlobExpression)
+		if err != nil {
+			log.Printf("While attempting to glob expression %s out of %s at position %d", dataFilenameGlobExpression, inFilename, match[0])
+			return err
+		}
 		templateFilename := string(contentsBytes[match[4]:match[5]])
-		templateContents, err := ioutil.ReadFile(templateFilename)
+		templateContents, err := os.ReadFile(templateFilename)
 		if err != nil {
 			log.Printf("While attempting to read template %s out of %s at position %d, template contents %s", templateFilename, inFilename, match[0], templateContents)
 			return err
@@ -58,22 +62,24 @@ func SingleFile(inFilename string, outFilename string) error {
 			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
 			return err
 		}
-		dataContents, err := ioutil.ReadFile(dataFilename)
-		if err != nil {
-			return err
-		}
-		var data interface{}
-		err = yaml.Unmarshal(dataContents, &data)
-		if err != nil {
-			return err
-		}
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
-		err = parsedTemplate.Execute(outputWriter, data)
-		if err != nil {
-			return err
+		for _, dataFilename := range dataFilenames {
+			dataContents, err := os.ReadFile(dataFilename)
+			if err != nil {
+				return err
+			}
+			var data interface{}
+			err = yaml.Unmarshal(dataContents, &data)
+			if err != nil {
+				return err
+			}
+			err = parsedTemplate.Execute(outputWriter, data)
+			if err != nil {
+				return err
+			}
+			outputWriter.Flush()
 		}
-		outputWriter.Flush()
 		upToCommand := contentsBytes[:match[0]]
 		afterCommand := contentsBytes[match[1]:]
 		contentsBytes = append(upToCommand, append(outputBuffer.Bytes(), afterCommand...)...)
@@ -90,7 +96,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
 			return err
 		}
-		dataContents, err := ioutil.ReadFile(dataFilename)
+		dataContents, err := os.ReadFile(dataFilename)
 		if err != nil {
 			return err
 		}
@@ -113,9 +119,9 @@ func SingleFile(inFilename string, outFilename string) error {
 	match := inlineDataRegex.FindSubmatchIndex(contentsBytes)
 	if len(match) > 0 {
 		templateFilename := string(contentsBytes[match[2]:match[3]])
-		templateContents, err := ioutil.ReadFile(templateFilename)
+		templateContents, err := os.ReadFile(templateFilename)
 		if err != nil {
-			log.Printf("While attempting to read template %s out of %s at position %d, template contents %s", templateFilename, inFilename, match[0], templateContents)
+			log.Printf("While attempting to read template2 %s out of %s at position %d, template contents %s", templateFilename, inFilename, match[0], templateContents)
 			return err
 		}
 		parsedTemplate, err := template.New(fmt.Sprintf("%s:%d", inFilename, match[0])).Funcs(AuxilirayFunctions()).Parse(string(templateContents))
@@ -138,7 +144,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		outputWriter.Flush()
 		contentsBytes = outputBuffer.Bytes()
 	}
-	err = ioutil.WriteFile(outFilename, contentsBytes, 0644)
+	err = os.WriteFile(outFilename, contentsBytes, 0644)
 	if err != nil {
 		return err
 	}

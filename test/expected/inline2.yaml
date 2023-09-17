@@ -1,0 +1,5 @@
+listOfItems:
+  - thirdItem
+  - fourthItem
+block:
+  aKey: aValue
