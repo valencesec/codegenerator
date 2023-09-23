@@ -11,6 +11,7 @@ func AuxilirayFunctions() template.FuncMap {
 	return template.FuncMap{
 		"quote":                        Quote,
 		"capitalCamelCase":             CapitalCamelCase,
+		"lowerCamelCase":               LowerCamelCase,
 		"orVoid":                       OrVoid,
 		"goType":                       GoType,
 		"goTypeWithModule":             GoTypeWithModule,
@@ -49,6 +50,10 @@ func Quote(input string) string {
 
 func CapitalCamelCase(input string) string {
 	return strings.ToUpper(input[:1]) + input[1:]
+}
+
+func LowerCamelCase(input string) string {
+	return strings.ToLower(input[:1]) + input[1:]
 }
 
 func OrVoid(input interface{}) string {

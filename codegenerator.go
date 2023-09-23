@@ -65,6 +65,7 @@ func SingleFile(inFilename string, outFilename string) error {
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
 		for _, dataFilename := range dataFilenames {
+			log.Println("Generating using data file", dataFilename)
 			dataContents, err := os.ReadFile(dataFilename)
 			if err != nil {
 				return err
