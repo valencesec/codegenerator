@@ -54,3 +54,5 @@ trimPrefix: Thing
 trimSuffix: Thing
 cutTakeBefore: /v2/abc/
 cutTakeAfter: /efg
+stringSliceContains true: affirmative
+stringSliceContains false: affirmative

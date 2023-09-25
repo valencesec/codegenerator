@@ -30,6 +30,7 @@ func AuxilirayFunctions() template.FuncMap {
 		"trimPrefix":                   TrimPrefix,
 		"trimSuffix":                   TrimSuffix,
 		"isBasicType":                  IsBasicType,
+		"stringSliceContains":          StringSliceContains,
 		"cutTakeBefore":                CutTakeBefore,
 		"cutTakeAfter":                 CutTakeAfter,
 	}
@@ -65,6 +66,15 @@ func OrVoid(input interface{}) string {
 
 func IsBasicType(input string) bool {
 	return input == "string" || input == "number" || input == "boolean" || input == "unknown"
+}
+
+func StringSliceContains(haystack []interface{}, needle string) bool {
+	for _, hay := range haystack {
+		if value, ok := hay.(string); ok && value == needle {
+			return true
+		}
+	}
+	return false
 }
 
 func goType(input string) string {
