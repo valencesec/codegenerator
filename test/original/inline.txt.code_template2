@@ -20,6 +20,13 @@ number: {{ "number" | goTypeWithModule "*model." }}
 string: {{ "string" | goTypeWithModule "*model." }}
 boolean: {{ "boolean" | goTypeWithModule "*model." }}
 SomethingElse: {{ "SomethingElse" | goTypeWithModule "*model." }}
+typescriptTypeWithModule:
+number: {{ "number" | typescriptTypeWithModule "model." }}
+string: {{ "string" | typescriptTypeWithModule "model." }}
+boolean: {{ "boolean" | typescriptTypeWithModule "model." }}
+unknown: {{ "unknown" | typescriptTypeWithModule "model." }}
+any: {{ "any" | typescriptTypeWithModule "model." }}
+SomethingElse: {{ "SomethingElse" | typescriptTypeWithModule "model." }}
 isBasicType:
 number: {{ if isBasicType "number" }}YES{{ else }}NO{{ end }}
 string: {{ if isBasicType "string" }}YES{{ else }}NO{{ end }}

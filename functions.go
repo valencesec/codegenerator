@@ -15,6 +15,7 @@ func AuxilirayFunctions() template.FuncMap {
 		"orVoid":                       OrVoid,
 		"goType":                       GoType,
 		"goTypeWithModule":             GoTypeWithModule,
+		"typescriptTypeWithModule":     TypescriptTypeWithModule,
 		"uppercaseToCapitalized":       UppercaseToCapitalized,
 		"replace":                      Replace,
 		"split":                        Split,
@@ -105,6 +106,25 @@ func GoTypeWithModule(module, input string) string {
 	converted := goType(input)
 	if converted != "" {
 		return converted
+	}
+	return fmt.Sprintf("%s%s", module, input)
+}
+
+func TypescriptTypeWithModule(module, input string) string {
+	if input == "string" {
+		return "string"
+	}
+	if input == "number" {
+		return "number"
+	}
+	if input == "boolean" {
+		return "boolean"
+	}
+	if input == "unknown" {
+		return "unknown"
+	}
+	if input == "any" {
+		return "any"
 	}
 	return fmt.Sprintf("%s%s", module, input)
 }

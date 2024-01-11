@@ -20,6 +20,13 @@ number: int64
 string: string
 boolean: bool
 SomethingElse: *model.SomethingElse
+typescriptTypeWithModule:
+number: number
+string: string
+boolean: boolean
+unknown: unknown
+any: any
+SomethingElse: model.SomethingElse
 isBasicType:
 number: YES
 string: YES
