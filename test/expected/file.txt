@@ -2,13 +2,20 @@ capitalCamelCase:
 List Item: firstItem
 List Item quoted: "firstItem"
 List Item capitalCamelCase: FirstItem
+List Item in listToCheckIn: firstItem
 List Item: secondItem
 List Item quoted: "secondItem"
 List Item capitalCamelCase: SecondItem
+List Item not in listToCheckIn: secondItem
+HAS testing:
 capitalCamelCase:
 List Item: thirdItem
 List Item quoted: "thirdItem"
 List Item capitalCamelCase: ThirdItem
+List Item not in listToCheckIn: thirdItem
 List Item: fourthItem
 List Item quoted: "fourthItem"
 List Item capitalCamelCase: FourthItem
+List Item in listToCheckIn: fourthItem
+HAS testing:
+HAS works

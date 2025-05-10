@@ -3,10 +3,17 @@ capitalCamelCase:
 List Item: {{ $listItem }}
 List Item quoted: {{ $listItem | quote }}
 List Item capitalCamelCase: {{ $listItem | capitalCamelCase }}
+{{- if $listItem | stringSliceContains $.listToCheckIn}}
+List Item in listToCheckIn: {{ $listItem }}
 {{- end }}
+{{- if $listItem | stringSliceContains $.listToCheckIn | not}}
+List Item not in listToCheckIn: {{ $listItem }}
+{{- end }}
+{{- end }}
+HAS testing:
 {{- if has . "testHas" }}
-HAS
+HAS works
 {{- end }}
 {{- if has . "testHasNot" }}
-HAS
+shloud not render
 {{- end }}

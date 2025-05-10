@@ -3,3 +3,4 @@ listOfItems:
   - fourthItem
 block:
   aKey: aValue
+testHas: 123

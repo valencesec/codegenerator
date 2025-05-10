@@ -18,6 +18,7 @@ import (
 // var inlineTemplateRegex = regexp.MustCompile(`inline template: data file:`)
 var inlineTemplateRegex = regexp.MustCompile(`\/\/ inline template: data file: "(.*)" *\r?\n((.|[\r\n])*?)\/\/ inline template end *\r?\n`)
 var fileTemplateRegex = regexp.MustCompile(`\/\/ file template: data file: "(.*)" template file: "(.*)" *\r?\n`)
+var globalDataRegex = regexp.MustCompile(`(\/\/|#) global data file: "(.*)" *\r?\n`)
 var inlineDataRegex = regexp.MustCompile(`# inline data for template: template file: "(.*)" *\r?\n`)
 
 func ScanFolder(rootFolder string, extension string) error {
@@ -39,6 +40,39 @@ func SingleFile(inFilename string, outFilename string) error {
 	contentsBytes, err := os.ReadFile(inFilename)
 	if err != nil {
 		return err
+	}
+	globalData := make(map[string]interface{})
+	for {
+		match := globalDataRegex.FindSubmatchIndex(contentsBytes)
+		if len(match) == 0 {
+			break
+		}
+		upToCommand := contentsBytes[:match[0]]
+		afterCommand := contentsBytes[match[1]:]
+		contentsBytes = append(upToCommand, afterCommand...)
+
+		dataFilenameGlobExpression := string(contentsBytes[match[4]:match[5]])
+		dataFilenames, err := filepath.Glob(dataFilenameGlobExpression)
+		if err != nil {
+			log.Printf("While attempting to glob expression %s out of %s at position %d", dataFilenameGlobExpression, inFilename, match[0])
+			return err
+		}
+
+		for _, dataFilename := range dataFilenames {
+			log.Println("Reading global data file", dataFilename)
+			dataContents, err := os.ReadFile(dataFilename)
+			if err != nil {
+				return err
+			}
+			var data map[string]interface{}
+			err = yaml.Unmarshal(dataContents, &data)
+			if err != nil {
+				return err
+			}
+			for k, v := range data {
+				globalData[k] = v
+			}
+		}
 	}
 	for {
 		match := fileTemplateRegex.FindSubmatchIndex(contentsBytes)
@@ -70,12 +104,19 @@ func SingleFile(inFilename string, outFilename string) error {
 			if err != nil {
 				return err
 			}
-			var data interface{}
+			var data map[string]interface{}
 			err = yaml.Unmarshal(dataContents, &data)
 			if err != nil {
 				return err
 			}
-			err = parsedTemplate.Execute(outputWriter, data)
+			finalData := map[string]interface{}{}
+			for k, v := range globalData {
+				finalData[k] = v
+			}
+			for k, v := range data {
+				finalData[k] = v
+			}
+			err = parsedTemplate.Execute(outputWriter, finalData)
 			if err != nil {
 				return err
 			}
@@ -101,14 +142,21 @@ func SingleFile(inFilename string, outFilename string) error {
 		if err != nil {
 			return err
 		}
-		var data interface{}
+		var data map[string]interface{}
 		err = yaml.Unmarshal(dataContents, &data)
 		if err != nil {
 			return err
 		}
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
-		err = parsedTemplate.Execute(outputWriter, data)
+		finalData := map[string]interface{}{}
+		for k, v := range globalData {
+			finalData[k] = v
+		}
+		for k, v := range data {
+			finalData[k] = v
+		}
+		err = parsedTemplate.Execute(outputWriter, finalData)
 		if err != nil {
 			return err
 		}
@@ -130,7 +178,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
 			return err
 		}
-		var data interface{}
+		var data map[string]interface{}
 		err = yaml.Unmarshal(contentsBytes, &data)
 		if err != nil {
 			return err
@@ -138,7 +186,14 @@ func SingleFile(inFilename string, outFilename string) error {
 
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
-		err = parsedTemplate.Execute(outputWriter, data)
+		finalData := map[string]interface{}{}
+		for k, v := range globalData {
+			finalData[k] = v
+		}
+		for k, v := range data {
+			finalData[k] = v
+		}
+		err = parsedTemplate.Execute(outputWriter, finalData)
 		if err != nil {
 			return err
 		}

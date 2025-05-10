@@ -2,7 +2,10 @@ capitalCamelCase:
 List Item: firstItem
 List Item quoted: "firstItem"
 List Item capitalCamelCase: FirstItem
+List Item not in listToCheckIn: firstItem
 List Item: secondItem
 List Item quoted: "secondItem"
 List Item capitalCamelCase: SecondItem
-HAS
+List Item not in listToCheckIn: secondItem
+HAS testing:
+HAS works

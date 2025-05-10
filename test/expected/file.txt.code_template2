@@ -1,1 +1,2 @@
 // file template: data file: "test/workdir/inline*.yaml" template file: "test/workdir/file.template"
+// global data file: "test/workdir/globalData.yaml"
