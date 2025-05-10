@@ -34,10 +34,11 @@ func AuxilirayFunctions() template.FuncMap {
 		"stringSliceContains":          StringSliceContains,
 		"cutTakeBefore":                CutTakeBefore,
 		"cutTakeAfter":                 CutTakeAfter,
+		"stringSliceOnlyContainsEntriesFromStringSlice": StringSliceOnlyContainsEntriesFromStringSlice,
 	}
 }
 
-func Has(input interface{}, field string) bool {
+func Has(input any, field string) bool {
 	asMap, ok := input.(map[string]any)
 	if !ok {
 		asMap, ok := input.(map[any]any)
@@ -63,7 +64,7 @@ func LowerCamelCase(input string) string {
 	return strings.ToLower(input[:1]) + input[1:]
 }
 
-func OrVoid(input interface{}) string {
+func OrVoid(input any) string {
 	if input == nil {
 		return "void"
 	}
@@ -74,13 +75,26 @@ func IsBasicType(input string) bool {
 	return input == "string" || input == "number" || input == "boolean" || input == "unknown"
 }
 
-func StringSliceContains(haystack []interface{}, needle string) bool {
+func StringSliceContains(haystack []any, needle string) bool {
 	for _, hay := range haystack {
 		if value, ok := hay.(string); ok && value == needle {
 			return true
 		}
 	}
 	return false
+}
+
+func StringSliceOnlyContainsEntriesFromStringSlice(haystack []any, needle []any) bool {
+	for _, n := range needle {
+		asString, ok := n.(string)
+		if !ok {
+			return false
+		}
+		if !StringSliceContains(haystack, asString) {
+			return false
+		}
+	}
+	return true
 }
 
 func goType(input string) string {
@@ -94,7 +108,7 @@ func goType(input string) string {
 		return "bool"
 	}
 	if input == "unknown" {
-		return "interface{}"
+		return "any"
 	}
 	return ""
 }

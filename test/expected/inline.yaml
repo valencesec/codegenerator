@@ -3,3 +3,14 @@ listOfItems:
   - secondItem
 block:
   aKey: aValue
+superSetOfStrings:
+  - AAAA1
+  - AAAA2
+  - AAAA3
+subSetOfStrings:
+  - AAAA1
+  - AAAA2
+partialIntersect:
+  - AAAA1
+  - AAAA2
+  - BBBB1

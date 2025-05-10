@@ -13,7 +13,7 @@ goType:
 number: int64
 string: string
 boolean: bool
-unknown: interface{}
+unknown: any
 SomethingElse: SomethingElse
 goTypeWithModule:
 number: int64
@@ -63,3 +63,5 @@ cutTakeBefore: /v2/abc/
 cutTakeAfter: /efg
 stringSliceContains true: affirmative
 stringSliceContains false: affirmative
+stringSliceOnlyContainsEntriesFromStringSlice: affirmative
+stringSliceOnlyContainsEntriesFromStringSlice: affirmative
