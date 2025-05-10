@@ -38,9 +38,14 @@ func AuxilirayFunctions() template.FuncMap {
 }
 
 func Has(input interface{}, field string) bool {
-	asMap, ok := input.(map[string]interface{})
+	asMap, ok := input.(map[string]any)
 	if !ok {
-		return false
+		asMap, ok := input.(map[any]any)
+		if !ok {
+			return false
+		}
+		_, has := asMap[field]
+		return has
 	}
 	_, has := asMap[field]
 	return has

@@ -13,6 +13,7 @@ import (
 	"text/template"
 
 	"gopkg.in/yaml.v2"
+	"maps"
 )
 
 // var inlineTemplateRegex = regexp.MustCompile(`inline template: data file:`)
@@ -41,7 +42,7 @@ func SingleFile(inFilename string, outFilename string) error {
 	if err != nil {
 		return err
 	}
-	globalData := make(map[string]interface{})
+	globalData := make(map[any]any)
 	for {
 		match := globalDataRegex.FindSubmatchIndex(contentsBytes)
 		if len(match) == 0 {
@@ -64,14 +65,12 @@ func SingleFile(inFilename string, outFilename string) error {
 			if err != nil {
 				return err
 			}
-			var data map[string]interface{}
+			var data map[any]interface{}
 			err = yaml.Unmarshal(dataContents, &data)
 			if err != nil {
 				return err
 			}
-			for k, v := range data {
-				globalData[k] = v
-			}
+			maps.Copy(globalData, data)
 		}
 	}
 	for {
@@ -104,18 +103,14 @@ func SingleFile(inFilename string, outFilename string) error {
 			if err != nil {
 				return err
 			}
-			var data map[string]interface{}
+			var data map[any]interface{}
 			err = yaml.Unmarshal(dataContents, &data)
 			if err != nil {
 				return err
 			}
-			finalData := map[string]interface{}{}
-			for k, v := range globalData {
-				finalData[k] = v
-			}
-			for k, v := range data {
-				finalData[k] = v
-			}
+			finalData := map[any]interface{}{}
+			maps.Copy(finalData, globalData)
+			maps.Copy(finalData, data)
 			err = parsedTemplate.Execute(outputWriter, finalData)
 			if err != nil {
 				return err
@@ -142,20 +137,16 @@ func SingleFile(inFilename string, outFilename string) error {
 		if err != nil {
 			return err
 		}
-		var data map[string]interface{}
+		var data map[any]interface{}
 		err = yaml.Unmarshal(dataContents, &data)
 		if err != nil {
 			return err
 		}
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
-		finalData := map[string]interface{}{}
-		for k, v := range globalData {
-			finalData[k] = v
-		}
-		for k, v := range data {
-			finalData[k] = v
-		}
+		finalData := map[any]interface{}{}
+		maps.Copy(finalData, globalData)
+		maps.Copy(finalData, data)
 		err = parsedTemplate.Execute(outputWriter, finalData)
 		if err != nil {
 			return err
@@ -178,7 +169,7 @@ func SingleFile(inFilename string, outFilename string) error {
 			log.Printf("While attempting to parse %s at position %d, template contents %s", inFilename, match[0], templateContents)
 			return err
 		}
-		var data map[string]interface{}
+		var data map[any]interface{}
 		err = yaml.Unmarshal(contentsBytes, &data)
 		if err != nil {
 			return err
@@ -186,13 +177,9 @@ func SingleFile(inFilename string, outFilename string) error {
 
 		outputBuffer := bytes.Buffer{}
 		outputWriter := bufio.NewWriter(&outputBuffer)
-		finalData := map[string]interface{}{}
-		for k, v := range globalData {
-			finalData[k] = v
-		}
-		for k, v := range data {
-			finalData[k] = v
-		}
+		finalData := map[any]interface{}{}
+		maps.Copy(finalData, globalData)
+		maps.Copy(finalData, data)
 		err = parsedTemplate.Execute(outputWriter, finalData)
 		if err != nil {
 			return err
