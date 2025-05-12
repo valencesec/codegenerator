@@ -65,3 +65,5 @@ stringSliceContains true: affirmative
 stringSliceContains false: affirmative
 stringSliceOnlyContainsEntriesFromStringSlice: affirmative
 stringSliceOnlyContainsEntriesFromStringSlice: affirmative
+stringSlicesIntersect: affirmative
+stringSlicesIntersect: affirmative

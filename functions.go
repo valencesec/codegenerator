@@ -34,6 +34,7 @@ func AuxilirayFunctions() template.FuncMap {
 		"stringSliceContains":          StringSliceContains,
 		"cutTakeBefore":                CutTakeBefore,
 		"cutTakeAfter":                 CutTakeAfter,
+		"stringSlicesIntersect":        StringSlicesIntersect,
 		"stringSliceOnlyContainsEntriesFromStringSlice": StringSliceOnlyContainsEntriesFromStringSlice,
 	}
 }
@@ -77,7 +78,24 @@ func IsBasicType(input string) bool {
 
 func StringSliceContains(haystack []any, needle string) bool {
 	for _, hay := range haystack {
-		if value, ok := hay.(string); ok && value == needle {
+		value, ok := hay.(string)
+		if !ok {
+			continue
+		}
+		if value == needle {
+			return true
+		}
+	}
+	return false
+}
+
+func StringSlicesIntersect(haystack []any, needle []any) bool {
+	for _, n := range needle {
+		asString, ok := n.(string)
+		if !ok {
+			return false
+		}
+		if StringSliceContains(haystack, asString) {
 			return true
 		}
 	}

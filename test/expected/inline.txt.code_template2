@@ -63,6 +63,8 @@ cutTakeBefore: {{ "/v2/abc/${id}/efg" | cutTakeBefore "${id}" }}
 cutTakeAfter: {{ "/v2/abc/${id}/efg" | cutTakeAfter "${id}" }}
 stringSliceContains true: {{ if stringSliceContains $.listOfItems "firstItem" }}affirmative{{else}}nope{{end}}
 stringSliceContains false: {{ if stringSliceContains $.listOfItems "doesntExist" }}nope{{else}}affirmative{{end}}
-stringSliceOnlyContainsEntriesFromStringSlice: {{ if stringSliceOnlyContainsEntriesFromStringSlice $.superSetOfString $.subsetOfString }}affirmative{{else}}nope{{end}}
-stringSliceOnlyContainsEntriesFromStringSlice: {{ if stringSliceOnlyContainsEntriesFromStringSlice $.superSetOfString $.partialIntersect }}nope{{else}}affirmative{{end}}
+stringSliceOnlyContainsEntriesFromStringSlice: {{ if stringSliceOnlyContainsEntriesFromStringSlice $.superSetOfStrings $.subSetOfStrings }}affirmative{{else}}nope{{end}}
+stringSliceOnlyContainsEntriesFromStringSlice: {{ if stringSliceOnlyContainsEntriesFromStringSlice $.superSetOfStrings $.partialIntersect }}nope{{else}}affirmative{{end}}
+stringSlicesIntersect: {{ if stringSlicesIntersect $.superSetOfStrings $.subSetOfStrings }}affirmative{{else}}nope{{end}}
+stringSlicesIntersect: {{ if stringSlicesIntersect $.superSetOfStrings $.partialIntersect }}affirmative{{else}}nope{{end}}
 // inline template end
