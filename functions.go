@@ -163,6 +163,9 @@ func TypescriptTypeWithModule(module, input string) string {
 	if input == "any" {
 		return "any"
 	}
+	if input == "void" {
+		return "void"
+	}
 	return fmt.Sprintf("%s%s", module, input)
 }
 
