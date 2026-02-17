@@ -194,7 +194,7 @@ func SingleFile(inFilename string, outFilename string) error {
 	if strings.HasSuffix(outFilename, ".go") {
 		_, err = exec.Command("gofmt", "-w", outFilename).CombinedOutput()
 		if err != nil {
-			log.Println("gofmt failed", err)
+			log.Println("gofmt failed:", outFilename, " error: ", err)
 			return err
 		}
 	}
